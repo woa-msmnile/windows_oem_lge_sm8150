@@ -1,0 +1,56 @@
+;
+; OemPanel.inf
+;
+
+[Version]
+Signature   = "$Windows NT$"
+Provider    = %ManufacturerName%
+ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318}
+Class       = System
+DriverVer = 12/17/2024,18.20.11.896
+CatalogFile = OemPanel.cat
+PnpLockdown = 1
+
+[Manufacturer]
+%ManufacturerName% = Surface, NTARM64.10.0...19041
+
+[Surface.NTARM64.10.0...19041]
+%DeviceName% = OemPanel, ACPI\OPLG0800
+
+[SourceDisksNames]
+1 = %DiskName%,,, ""
+
+[SourceDisksFiles]
+OemPanel.sys   = 1
+
+[DestinationDirs]
+OEMCopyFiles = 13
+
+[OemPanel.NT]
+CopyFiles = OEMCopyFiles
+
+[OEMCopyFiles]
+OemPanel.sys
+
+[OemPanel.NT.Services]
+AddService = OemPanel, %SPSVCINST_ASSOCSERVICE%, OemPanel_Service_Inst
+
+[OemPanel_Service_Inst]
+DisplayName    = %SvcDesc%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %13%\OemPanel.sys
+LoadOrderGroup = Extended Base
+
+[Strings]
+ManufacturerName = "LGE"
+DiskName         = "LGE Hana OEM Panel Installation Disk"
+DeviceName       = "LGE Hana OEM Panel Device"
+SvcDesc          = "LGE Hana OEM Panel Device"
+
+SPSVCINST_ASSOCSERVICE = 0x00000002
+SERVICE_KERNEL_DRIVER  = 1
+SERVICE_DEMAND_START   = 3
+SERVICE_ERROR_IGNORE   = 0
+SERVICE_ERROR_NORMAL   = 1
